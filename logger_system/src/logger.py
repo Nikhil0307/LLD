@@ -19,7 +19,7 @@ class Logger:
 
     def __init__(
         self,
-        log_dir='./logs',
+        log_dir=Constants.LOG_FILE_PATH,
         current_log_level=Constants.INFO,
         log_format="[{time}] {level}: {message}",
         max_log_size=5 * 1024 * 1024,  # 5MB

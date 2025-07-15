@@ -1,85 +1,141 @@
-## 🔁 PHASE 1: Core Enhancements
+---
 
-### 1. ✅ Add Timestamps
+# 📝 Custom Python Logger
 
-**❓ How would you enhance your logger to include timestamps for each message?**
-
-🔹 *Hint:* Use `datetime.now().strftime()` to format the current time and prepend it in the `log()` message.
+A **lightweight, thread-safe, asynchronous logging system** built from scratch in Python — complete with log level filtering, rotation, formatting, singleton pattern, and daily file handling. This logger is designed to be production-ready and extensible.
 
 ---
 
-### 2. ✅ Add Singleton Pattern
+## 📦 Features
 
-**❓ How can you avoid creating multiple Logger instances unnecessarily?**
-
-🔹 *Hint:* Use a class-level variable to cache the instance and return that from a `get_instance()` method or override `__new__`.
-
----
-
-### 3. ✅ Add Thread Safety
-
-**❓ How would you ensure thread-safe writes to the log file?**
-
-🔹 *Hint:* Use `threading.Lock()` in your class and acquire it before writing to the file. Release it after.
+* ✅ Singleton design to avoid duplicate instances
+* ✅ Thread-safe asynchronous logging via `queue.Queue`
+* ✅ Configurable log levels: `DEBUG`, `INFO`, `WARNING`, `ERROR`
+* ✅ Log rotation based on file size
+* ✅ Daily log files with date-based naming
+* ✅ Custom log format templates
+* ✅ Optional console + file output support
+* ✅ Extensible with metrics and structured logging
 
 ---
 
-## 🔁 PHASE 2: Configurability
+## 📂 Directory Structure
 
-### 4. 🎛 Add Configurable Log Level Filtering
-
-**❓ How would you skip writing DEBUG messages unless explicitly allowed?**
-
-🔹 *Hint:* Store a `current_log_level` (e.g., INFO), and only write messages if their level is ≥ `current_log_level`.
-
----
-
-### 5. 🛠 Add Custom Format Support
-
-**❓ How would you let users define how logs are formatted? (e.g., with timestamps, line numbers, etc.)**
-
-🔹 *Hint:* Accept a format string in `__init__`, like `"[{time}] {level}: {message}"`, and use `.format()` or f-strings with that.
+```
+logger/
+├── src/
+│   └── logger.py          # Main Logger implementation
+├── conf/
+│   └── Constants.py       # Log level constants
+├── logs/
+│   └── YYYY-MM-DD.log     # Auto-created log files
+└── main.py                # Sample usage
+```
 
 ---
 
-## 🔁 PHASE 3: Production-Level Logging
+## ⚙️ Usage
 
-### 6. 💥 Add Log Rotation
+### 1. ✅ Import and Initialize
 
-**❓ How would you rotate the log file if it exceeds a certain size (e.g., 5MB)?**
+```python
+from src.logger import Logger
+from conf.Constants import Constants
 
-🔹 *Hint:* Check `os.path.getsize()` before writing. If size > limit, rename `application.log` → `application.log.1` and start a fresh one.
+logger = Logger(
+    log_dir='./logs',
+    current_log_level=Constants.INFO,
+    log_format="[{time}] {level}: {message}",
+    max_log_size=5 * 1024 * 1024  # 5 MB
+)
+```
+
+### 2. ✅ Log Messages
+
+```python
+logger.log("This is an info message.", level=Constants.INFO)
+logger.log("This is a warning.", level=Constants.WARNING)
+logger.log("Something went wrong!", level=Constants.ERROR)
+logger.log("Debug details here.", level=Constants.DEBUG)
+```
+
+### 3. ✅ Shutdown on Exit
+
+```python
+logger.shutdown()
+```
+
+> 💡 *Alternatively, register shutdown with `atexit` to handle auto-cleanup.*
 
 ---
 
-### 7. 📂 Support for Daily Log Files
+## 🛠 Constants Definition Example
 
-**❓ How would you log to a file named with today’s date (e.g., `2025-07-15.log`)?**
-
-🔹 *Hint:* Use `datetime.today().strftime("%Y-%m-%d")` to generate the filename in `__init__`.
-
----
-
-### 8. 🧵 Add Asynchronous Logging (Optional Advanced)
-
-**❓ How would you make logging non-blocking using a background thread or queue?**
-
-🔹 *Hint:* Use a `queue.Queue()` to push log messages and let a background thread handle actual file writes.
+```python
+# conf/Constants.py
+class Constants:
+    DEBUG = "DEBUG"
+    INFO = "INFO"
+    WARNING = "WARNING"
+    ERROR = "ERROR"
+```
 
 ---
 
-### 9. 🌍 Add Console vs File Output
+## 🧠 Design Highlights
 
-**❓ How would you support logging to both file and console?**
-
-🔹 *Hint:* Accept an optional `output_targets` list (e.g., `['file', 'console']`) and log accordingly.
+| Feature                  | Description                                                     |
+| ------------------------ | --------------------------------------------------------------- |
+| **Singleton**            | Ensures one logger instance across app using `__new__`.         |
+| **Thread Safety**        | Uses `threading.Lock` and background thread for writes.         |
+| **Asynchronous Logging** | Messages are queued and written in a non-blocking way.          |
+| **Log Rotation**         | Automatically rotates files if they exceed `max_log_size`.      |
+| **Daily Files**          | New log file per day based on current date.                     |
+| **Flexible Format**      | Supports custom templates like `"[{time}] {level}: {message}"`. |
+| **Filter by Level**      | Skip messages lower than `current_log_level`.                   |
 
 ---
 
-### 10. 📈 Add Metrics or Stats
+## 🌍 Coming Soon / To-Dos
 
-**❓ How would you expose metrics like total logs written, logs by level, etc.?**
+* [ ] Support both file + console output targets
+* [ ] JSON-formatted logs for machine parsing
+* [ ] Metrics tracking (e.g., logs per level)
+* [ ] Log retention policy (auto-delete old files)
+* [ ] Remote logging over TCP/HTTP
 
-🔹 *Hint:* Use class-level counters to increment per `log()` call.
+---
+
+## 📌 Example Output
+
+```
+[2025-07-15 22:14:59] INFO: App started successfully
+[2025-07-15 22:15:01] WARNING: High memory usage
+[2025-07-15 22:15:03] ERROR: Unable to connect to database
+```
+
+---
+
+## 🧪 Test This Logger
+
+```python
+# main.py
+from src.logger import Logger
+from conf.Constants import Constants
+
+if __name__ == "__main__":
+    logger = Logger()
+    for i in range(10):
+        logger.log(f"Test info {i}", level=Constants.INFO)
+        logger.log(f"Test warn {i}", level=Constants.WARNING)
+        logger.log(f"Test error {i}", level=Constants.ERROR)
+    logger.shutdown()
+```
+
+---
+
+## 👨‍💻 Author
+
+Built by \[Nikhil Baskar] as a hands-on exercise in building low-level systems in Python.
 
 ---
