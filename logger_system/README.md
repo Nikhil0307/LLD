@@ -136,6 +136,6 @@ if __name__ == "__main__":
 
 ## 👨‍💻 Author
 
-Built by \[Nikhil Baskar] as a hands-on exercise in building low-level systems in Python.
+Built by **Nikhil Baskar** as a hands-on exercise in building low-level systems in Python.
 
 ---
