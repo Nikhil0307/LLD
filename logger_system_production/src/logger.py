@@ -28,10 +28,10 @@ class Logger:
             max_backup_files=5,
             queue_size=10000,
             drop_if_queue_full=True,  # backpressure vs drop strategy
-            console_logging=False,  # New: console logging toggle
-            structured_logging=False,  # New: outputs logs as JSON if True
-            retention_days=7,  # New: retention policy in days
-            extra_fields=None  # New: dictionary for extra fields (e.g., request_id, component)
+            console_logging=False,
+            structured_logging=False,
+            retention_days=7,
+            extra_fields=None
     ):
         if self._initialized:
             return
