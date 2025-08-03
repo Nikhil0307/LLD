@@ -1,6 +1,6 @@
 - ~~Logger System~~
 - ~~Notification Service~~
-- Rate Limiter 
+- ~~Rate Limiter~~ 
 - Parking Lot 
 - Tic-Tac-Toe / Chess / Snake Game 
 - File Storage / Dropbox Clone
