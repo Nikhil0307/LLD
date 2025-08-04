@@ -1,7 +1,6 @@
 - ~~Logger System~~
 - ~~Notification Service~~
 - ~~Rate Limiter~~ 
-- Parking Lot 
 - Tic-Tac-Toe
 - File Storage / Dropbox Clone 
 - Project Management Tool Like Jira 
