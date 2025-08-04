@@ -5,9 +5,10 @@ class Board:
         self.grid = [[" " for _ in range(3)] for _ in range(3)]
 
     def display(self):
+        print("-" * 9)
         for row in self.grid:
             print(" | ".join(row))
-            print("-" * 5)
+            print("-" * 9)
 
     def is_valid_move(self, row, col):
         return 0 <= row < 3 and 0 <= col < 3 and self.grid[row][col] == " "
