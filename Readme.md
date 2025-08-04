@@ -2,5 +2,23 @@
 - ~~Notification Service~~
 - ~~Rate Limiter~~ 
 - Parking Lot 
-- Tic-Tac-Toe / Chess / Snake Game 
-- File Storage / Dropbox Clone
+- Tic-Tac-Toe
+- File Storage / Dropbox Clone 
+- Project Management Tool Like Jira 
+- Real-Time Collaboration Tool.
+- Scalable Notification System
+- Search System for Knowledge Base Articles
+- API Gateway for Atlassian Services
+- Version Control System for Documentation
+- Real-Time Analytics Platform
+- Scalable User Authentication and Authorization System
+- Workflow Automation System
+- Logging and Monitoring System
+- parking System
+- Database Design
+- Snake Game
+- Ticketing System like Jira
+- URL Shortening Service
+- Distributed Messaging System
+- Scalable Chat Application
+- Job Scheduler

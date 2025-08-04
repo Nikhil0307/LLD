@@ -5,7 +5,7 @@ from conf.Constants import Constants
 default_fields = {"component": "UserService", "hostname": "server01"}
 
 logger = Logger(
-    log_dir='./logs',
+    log_dir='logs',
     current_log_level=Constants.INFO,
     console_logging=True,           # Enable console output
     structured_logging=True,        # Log as JSON
